@@ -57,8 +57,7 @@
 		position: -webkit-sticky;
 		position: sticky;
 		top: calc(var(--header-height, 0px) * var(--enable-sticky-header) + var(--announcement-bar-height, 0px) * var(--enable-sticky-announcement-bar) - 10px);
-
-		max-height: calc(var(--window-height, 100vh) - var(--custom-offset, 0px) - var(--header-height, 0px) * var(--enable-sticky-header) - var(--announcement-bar-height, 0px) * var(--enable-sticky-announcement-bar));
+		max-height: calc(100% - var(--custom-offset, 0px) - var(--header-height, 0px) * var(--enable-sticky-header) - var(--announcement-bar-height, 0px) * var(--enable-sticky-announcement-bar));
 	}
 }
 
