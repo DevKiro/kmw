@@ -1,0 +1,187 @@
+{
+  "sections": {
+    "01cddf20-79b7-4a1d-8986-01da89c0486a": {
+      "type": "collection-list",
+      "blocks": {
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "rings",
+            "subheading": "Happy 2024!",
+            "title": "Ring in New Styles",
+            "link_text": "Shop Rings",
+            "link_url": "",
+            "text_color": "#ffffff",
+            "overlay_color": "rgba(0,0,0,0)",
+            "overlay_gradient": "linear-gradient(25deg, rgba(64, 93, 230, 1), rgba(255, 201, 104, 0) 50%)",
+            "overlay_opacity": 75
+          }
+        },
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-2": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "agmes",
+            "subheading": "{{ block.settings.collection.metafields.custom.text_after_title.value }}",
+            "title": "Designer {{ block.settings.collection.title }}",
+            "link_text": "Shop Now",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "rgba(0,0,0,0)",
+            "overlay_gradient": "linear-gradient(320deg, rgba(56, 78, 197, 1) 16%, rgba(203, 68, 194, 1) 52%, rgba(255, 201, 104, 1) 87%)",
+            "overlay_opacity": 50
+          }
+        },
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-3": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "",
+            "image": "shopify:\/\/shop_images\/Medium_JPEG-fw23-run_culture_brand_build-editorial-24.jpg",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_gradient": "",
+            "overlay_opacity": 30
+          }
+        },
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-4": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "",
+            "image": "shopify:\/\/shop_images\/Cloudswift_3.jpg",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_gradient": "",
+            "overlay_opacity": 30
+          }
+        },
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-5": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "",
+            "image": "shopify:\/\/shop_images\/Medium_JPEG-ss23-the_roger_advantage-editorial-05.jpg",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_gradient": "",
+            "overlay_opacity": 30
+          }
+        },
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-6": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "",
+            "image": "shopify:\/\/shop_images\/fw23-cyclon_Featured_Cards-1540x2180-02.jpg",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_gradient": "",
+            "overlay_opacity": 30
+          }
+        },
+        "33fda53c-2eaf-4230-ae1f-49a5cc1a3407": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_gradient": "",
+            "overlay_opacity": 30
+          }
+        },
+        "e07e9bf8-ad33-4d85-99c9-747d89d9ba29": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_gradient": "",
+            "overlay_opacity": 30
+          }
+        },
+        "4861788f-8af4-4db3-94bf-e0c3c5090c28": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_gradient": "",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-1",
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-2",
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-3",
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-4",
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-5",
+        "template--21592083431710__01cddf20-79b7-4a1d-8986-01da89c0486a-collection-6",
+        "33fda53c-2eaf-4230-ae1f-49a5cc1a3407",
+        "e07e9bf8-ad33-4d85-99c9-747d89d9ba29",
+        "4861788f-8af4-4db3-94bf-e0c3c5090c28"
+      ],
+      "settings": {
+        "reveal_on_scroll": false,
+        "layout": "grid",
+        "image_height": "tall",
+        "image_fit": "cover",
+        "subheading": "Subheading",
+        "subheading_tag": "span",
+        "title": "<em>Collection<\/em> List",
+        "heading_tag": "h2",
+        "text": "<p>Use description to give your customers insight into your brand.<\/p>",
+        "button_text": "See all",
+        "button_link": "",
+        "button_appearance": "button--outline",
+        "text_alignment": "left",
+        "blocks_on_desktop": 4,
+        "blocks_on_mobile": "1",
+        "blocks_position": "start",
+        "blocks_row_space": 8,
+        "blocks_column_space": 8,
+        "blocks_text_position": "end",
+        "blocks_text_alignment": "left",
+        "blocks_subheading_tag": "span",
+        "blocks_heading_tag": "h3",
+        "background": "#e9fc5a",
+        "text_color": "#405de6"
+      }
+    }
+  },
+  "order": [
+    "01cddf20-79b7-4a1d-8986-01da89c0486a"
+  ]
+}
