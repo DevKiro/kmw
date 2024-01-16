@@ -1,0 +1,237 @@
+{{ 'main-list-collections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign excluded_vendors = section.settings.excluded_collections | newline_to_br | split: '<br />'
+  assign included_collections = section.settings.included_collections | newline_to_br | split: '<br />'
+  assign total_vendors = 0
+  assign included_vendors = ''
+
+  for vendor in shop.vendors
+    assign is_excluded = false
+    assign current_vendor_handle = vendor | handleize
+    for excluded_vendor in excluded_vendors
+      assign excluded_vendor_handleized = excluded_vendor | handleize
+      if current_vendor_handle == excluded_vendor_handleized
+        assign is_excluded = true
+        break
+      endif
+    endfor
+    unless is_excluded
+      assign total_vendors = total_vendors | plus: 1
+      assign included_vendors = included_vendors | append: vendor | append: ','
+    endunless
+  endfor
+
+  for included_collection in included_collections
+    assign included_collection_handleized = included_collection | handleize
+    assign included_collection_name = collections[included_collection_handleized].title
+    if included_collection_name != blank
+      assign total_vendors = total_vendors | plus: 1
+      assign included_vendors = included_vendors | append: included_collection_name | append: ','
+    endif
+  endfor
+
+  assign included_vendors = included_vendors | split: ','
+
+  assign sorted_vendors = ''
+  for vendor in included_vendors
+    assign lower_vendor = vendor | downcase
+    assign sorted_vendors = sorted_vendors | append: lower_vendor | append: ','
+  endfor
+  assign sorted_vendors = sorted_vendors | split: ',' | sort
+
+  assign final_sorted_vendors = ''
+  for lower_vendor in sorted_vendors
+    for original_vendor in included_vendors
+      assign downcased_original_vendor = original_vendor | downcase
+      if lower_vendor == downcased_original_vendor
+        assign final_sorted_vendors = final_sorted_vendors | append: original_vendor | append: ','
+        break
+      endif
+    endfor
+  endfor
+  assign included_vendors = final_sorted_vendors | split: ','
+
+  if section.settings.title != blank
+    assign title = section.settings.title
+  else
+    assign title = 'list_collections.general.title' | t
+  endif
+-%}
+
+<!-- START: List collections header -->
+<div
+  class="container section"
+  id="JumpBackTop"
+  data-section-label="JumpBackTop"
+>
+  <header class="vendor-directory-header text--{{ section.settings.text_position }} section bordered-{{ section.settings.section_separator }}">
+    <{{ section.settings.title_tag }} class="vendor-directory-title {{ section.settings.title_size }}">
+      {{- title -}}
+    </{{ section.settings.title_tag }}>
+    {%- if section.settings.show_subtitle -%}
+      <{{ section.settings.subheading_tag }} class="vendor-directory-subtitle heading text--xlarge">
+        {{- 'list_collections.general.subtitle' | t: total_vendors: total_vendors -}}
+      </{{ section.settings.subheading_tag }}>
+    {%- endif -%}
+  </header>
+</div>
+<!-- END: List collections header -->
+
+{% schema %}
+{
+  "name": "List collections banner",
+  "tag": "section",
+  "class": "shopify-section--main-list-collections-banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "title_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h1",
+          "label": "Heading 1"
+        },
+        {
+          "value": "h2",
+          "label": "Heading 2"
+        },
+        {
+          "value": "h3",
+          "label": "Heading 3"
+        },
+        {
+          "value": "h4",
+          "label": "Heading 4"
+        },
+        {
+          "value": "h5",
+          "label": "Heading 5"
+        },
+        {
+          "value": "h6",
+          "label": "Heading 6"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subtitle",
+      "label": "Show subheading",
+      "default": true,
+      "info": "Changed Subtitle in Theme content settings. Use 'total_vendors' variable for collection count."
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Borders"
+    },
+    {
+      "type": "select",
+      "id": "section_separator",
+      "label": "Show section separator",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "both",
+          "label": "Both"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Advanced: SEO"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Heading tag",
+      "options": [
+        {
+          "value": "span",
+          "label": "<span>"
+        },
+        {
+          "value": "h1",
+          "label": "<h1>"
+        },
+        {
+          "value": "h2",
+          "label": "<h2>"
+        },
+        {
+          "value": "h3",
+          "label": "<h3>"
+        },
+        {
+          "value": "h4",
+          "label": "<h4>"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "subheading_tag",
+      "label": "Subheading tag",
+      "options": [
+        {
+          "value": "span",
+          "label": "<span>"
+        },
+        {
+          "value": "h2",
+          "label": "<h2>"
+        },
+        {
+          "value": "h3",
+          "label": "<h3>"
+        },
+        {
+          "value": "h4",
+          "label": "<h4>"
+        }
+      ],
+      "default": "span"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,703 @@
+{{ 'main-list-collections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign vendor_sections = section.settings.vendor_sections | default: 'A-C,D-F,G-L,M-Z,0-9,More' | split: ','
+  assign excluded_vendors = section.settings.excluded_collections | newline_to_br | split: '<br />'
+  assign included_collections = section.settings.included_collections | newline_to_br | split: '<br />'
+  assign included_vendors = ''
+
+  for vendor in shop.vendors
+    assign is_excluded = false
+    assign current_vendor_handle = vendor | handleize
+    for excluded_vendor in excluded_vendors
+      assign excluded_vendor_handleized = excluded_vendor | handleize
+      if current_vendor_handle == excluded_vendor_handleized
+        assign is_excluded = true
+        break
+      endif
+    endfor
+    unless is_excluded
+      assign included_vendors = included_vendors | append: vendor | append: ','
+    endunless
+  endfor
+
+  for included_collection in included_collections
+    assign included_collection_handleized = included_collection | handleize
+    assign included_collection_name = collections[included_collection_handleized].title
+    if included_collection_name != blank
+      assign included_vendors = included_vendors | append: included_collection_name | append: ','
+    endif
+  endfor
+
+  assign included_vendors = included_vendors | split: ','
+
+  assign sorted_vendors = ''
+  for vendor in included_vendors
+    assign lower_vendor = vendor | downcase
+    assign sorted_vendors = sorted_vendors | append: lower_vendor | append: ','
+  endfor
+  assign sorted_vendors = sorted_vendors | split: ',' | sort
+
+  assign final_sorted_vendors = ''
+  for lower_vendor in sorted_vendors
+    for original_vendor in included_vendors
+      assign downcased_original_vendor = original_vendor | downcase
+      if lower_vendor == downcased_original_vendor
+        assign final_sorted_vendors = final_sorted_vendors | append: original_vendor | append: ','
+        break
+      endif
+    endfor
+  endfor
+  assign included_vendors = final_sorted_vendors | split: ','
+
+  assign all_displayed_tags = ''
+  assign tag_color_combinations = section.settings.tag_color_combinations | newline_to_br | split: '<br />'
+-%}
+
+<div class="section" id="JumpBackTop" data-section-label="JumpBackTop">
+  <div class="container">
+    {%- if collections.size == 0 -%}
+      <div class="empty-state text-container section section-bordered-{{ section.settings.section_separator }}">
+        <h1 class="h2">{{ 'list_collections.general.title' | t }}</h1>
+        <p class="text--large">{{ 'list_collections.general.empty' | t }}</p>
+        <div class="button-wrapper">
+          <a href="{{ routes.root_url }}" class="button button--primary">
+            {{- 'list_collections.general.back_to_home' | t -}}
+          </a>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="vendor-directory section section-bordered-{{ section.settings.section_separator }}">
+        <!-- START: Filter Bar -->
+        {%- if section.settings.show_filters == true
+          or section.settings.show_vendor_tags
+          and section.settings.show_tags_legend
+        -%}
+          <div class="vendor-directory-meta-bar" data-sticky="true">
+            <!-- START: Tag Legend -->
+            {%- if section.settings.show_vendor_tags and section.settings.show_tags_legend -%}
+              <div
+                class="tag-legend pill-list-wrapper list-is-scroller"
+                role="region"
+                aria-label="Tag Legend: Explains the meaning of colored tags next to collection names."
+              >
+                <ul class="tag-legend-list pill-list" role="list">
+                  <li
+                    class="pill-list-label pill-list--item text--normal text--subdued{% unless section.settings.show_tags_legend_label %} visually-hidden{% endunless %}"
+                    aria-hidden="true"
+                    role="listitem"
+                  >
+                    <{{ section.settings.heading_tag }} class="legend-label heading--small">
+                      Tags:
+                    </{{ section.settings.heading_tag }}>
+                  </li>
+                  {%- for tag_combination in tag_color_combinations -%}
+                    {%- assign parts = tag_combination | split: ',' -%}
+                    {%- assign tag_color_code = parts[1] | strip -%}
+                    {%- assign tag_label = parts[2] | strip -%}
+                    {%- assign tag_color_code_muted = settings.background | color_mix: tag_color_code, 0 -%}
+                    {%- assign tag_color_code_border = settings.background | color_mix: tag_color_code, 70 -%}
+                    {%- style -%}
+                      #shopify-section-{{ section.id }} .tag-legend-list #vendor-tag-{{ forloop.index }}.pill {
+                        --pill-background: {{ tag_color_code_muted.red }}, {{ tag_color_code_muted.green }}, {{ tag_color_code_muted.blue }};
+                        --pill-border: var(--root-text-color-muted);
+                        --pill-border: {{ tag_color_code_border | color_extract: 'red' }}, {{ tag_color_code_border | color_extract: 'green' }}, {{ tag_color_code_border | color_extract: 'blue' }};
+                        --pill-border: {{ tag_color_code | color_extract: 'red' }}, {{ tag_color_code | color_extract: 'green' }}, {{ tag_color_code | color_extract: 'blue' }};
+                      {% comment %} REMOVE COMMENT TO USE AND GIVE EACH TAG A STRONG BORDER COLOR - OVERRIDES THE SAME VARIABLE DIRECTLY ABOVE
+                        --pill-border: {{ tag_color_code | color_extract: 'red' }}, {{ tag_color_code | color_extract: 'green' }}, {{ tag_color_code | color_extract: 'blue' }};
+                      {% endcomment %}
+                      }
+                    {%- endstyle -%}
+
+                    <li class="pill-list--item" role="listitem">
+                      <span
+                        id="vendor-tag-{{ forloop.index }}"
+                        class="pill text--semibold text--small"
+                        aria-label="{{ tag_label }}"
+                      >
+                        {% comment %} <span class="vendor-tag" style="background: {{ tag_color_code }};"></span> {% endcomment %}
+                        <span aria-hidden="true">{{ tag_label -}}</span>
+                      </span>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+            <!-- END: Tag Legend -->
+            <!-- START: Filters -->
+            {%- if section.settings.show_filters == true -%}
+              {%- if section.settings.filters_appearance == 'nav_list' -%}
+                <nav class="filter-bar pill-list-wrapper list-is-scroller" role="navigation">
+                  <ul class="filter-list pill-list" role="list">
+                    {%- for section_label in vendor_sections -%}
+                      {%- liquid
+                        assign vendors_in_section = ''
+                        for vendor in included_vendors
+                          assign first_letter = vendor | slice: 0, 1 | upcase
+                          if section_label == 'More'
+                            unless first_letter >= 'A' and first_letter <= 'Z'
+                              assign vendors_in_section = vendors_in_section | append: vendor | append: ','
+                            endunless
+                          else
+                            assign section_start = section_label | slice: 0, 1 | upcase
+                            assign section_end = section_label | slice: -1 | upcase
+                            if first_letter >= section_start and first_letter <= section_end
+                              assign vendors_in_section = vendors_in_section | append: vendor | append: ','
+                            endif
+                          endif
+                        endfor
+                        assign vendors_in_section = vendors_in_section | split: ','
+                      -%}
+
+                      {%- if vendors_in_section.size > 0 or section.settings.show_empty_sections -%}
+                        <li class="pill-list--item" role="listitem">
+                          <a
+                            class="pill pill-button pill-button-large text--semibold text--small"
+                            href="#{{ section_label }}"
+                            role="link"
+                            aria-label="Filter vendors in {{ section_label }}"
+                          >
+                            {{- section_label -}}
+                          </a>
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </nav>
+              {%- else -%}
+                <!-- Dropdown select, optimized for SEO, accessibility, and screen reader compatibility -->
+                <form class="filter-bar select-dropdown" aria-live="polite" role="form">
+                  <label
+                    id="anchorDropdownLabel"
+                    class="dropdown-label visually-hidden"
+                    for="anchorDropdown"
+                    role="label"
+                    >Navigate collection list headings:</label
+                  >
+                  <select
+                    name="anchorDropdown"
+                    id="anchorDropdown"
+                    class="select-input select-input--solid"
+                    aria-labelledby="anchorDropdownLabel"
+                    aria-controls="collections-list-section"
+                    onchange="scrollToSection(this.value);"
+                    data-jump-select="true"
+                    role="listbox"
+                  >
+                    <option value="data-section-label=JumpBackTop" selected>Select: Jump to section</option>
+                    {%- for section_label in vendor_sections -%}
+                      {%- liquid
+                        assign vendors_in_section = ''
+                        for vendor in included_vendors
+                          assign first_letter = vendor | slice: 0, 1 | upcase
+                          if section_label == 'More'
+                            unless first_letter >= 'A' and first_letter <= 'Z'
+                              assign vendors_in_section = vendors_in_section | append: vendor | append: ','
+                            endunless
+                          else
+                            assign section_start = section_label | slice: 0, 1 | upcase
+                            assign section_end = section_label | slice: -1 | upcase
+                            if first_letter >= section_start and first_letter <= section_end
+                              assign vendors_in_section = vendors_in_section | append: vendor | append: ','
+                            endif
+                          endif
+                        endfor
+                        assign vendors_in_section = vendors_in_section | split: ','
+                      -%}
+
+                      {%- if vendors_in_section.size > 0 or section.settings.show_empty_sections -%}
+                        <option value="data-section-label={{ section_label }}">{{ section_label }}</option>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </select>
+                  {%- render 'icon' with 'form-select', inline: true -%}
+                </form>
+              {%- endif -%}
+            {%- endif -%}
+            <!-- END: Filters -->
+          </div>
+        {%- endif -%}
+        <!-- END: Filter Bar -->
+
+        {%- for section_label in vendor_sections -%}
+          {%- liquid
+            assign vendors_in_section = ''
+            for vendor in included_vendors
+              assign first_letter = vendor | slice: 0, 1 | upcase
+              if section_label == 'More'
+                unless first_letter >= 'A' and first_letter <= 'Z'
+                  assign vendors_in_section = vendors_in_section | append: vendor | append: ','
+                endunless
+              else
+                assign section_start = section_label | slice: 0, 1 | upcase
+                assign section_end = section_label | slice: -1 | upcase
+                if first_letter >= section_start and first_letter <= section_end
+                  assign vendors_in_section = vendors_in_section | append: vendor | append: ','
+                endif
+              endif
+            endfor
+            assign vendors_in_section = vendors_in_section | split: ','
+          -%}
+
+          {%- if vendors_in_section.size > 0 or section.settings.show_empty_sections -%}
+            <div
+              class="vendor-section"
+              id="collections-list-section"
+              role="region"
+              aria-labelledby="{{ section_label }}"
+            >
+              <{{ section.settings.heading_tag }}
+                id="{{ section_label }}"
+                class="vendor-section-header h4{% if vendors_in_section.size == 0 %} text--light{% endif %}"
+                data-section-label="{{ section_label }}"
+                data-offset="20"
+                role="heading"
+                aria-level="2"
+              >
+                <span>{{ section_label }}</span>
+              </{{ section.settings.heading_tag }}>
+              <div class="vendor-names">
+                {%- if vendors_in_section.size == 0 -%}
+                  <div class="vendor-name no-vendors">
+                    <{{ section.settings.collection_name_tag }} class="vendor-name-heading text--body text--light">
+                      No results
+                    </{{ section.settings.collection_name_tag }}>
+                  </div>
+                {%- else -%}
+                  {%- for vendor in vendors_in_section -%}
+                    <div class="vendor-name">
+                      <!-- START collection image -->
+                      {%- if section.settings.show_image -%}
+                        {%- capture vendor_handle -%}{{ vendor | handleize }}{%- endcapture -%}
+
+                        {%- liquid
+                          assign collection_name = collections[vendor_handle]
+                          assign first_product = collection_name.products.first
+                          assign first_product_image = first_product.featured_media.preview_image
+                          assign custom_thumbnail = blank
+
+                          for block in section.blocks
+                            if vendor == block.settings.collection_name
+                              assign custom_thumbnail = block.settings.collection_thumbnail
+                              break
+                            endif
+                          endfor
+
+                          if custom_thumbnail != blank
+                            assign collection_image = custom_thumbnail
+                            assign image_alt = collection_image.alt | default: collection_name.featured_image.alt | escape
+                          elsif collection_name.metafields.custom.thumbnail_image.value != blank
+                            assign collection_image = collection_name.metafields.custom.thumbnail_image.value
+                            assign image_alt = collection_image.alt | default: collection_name.featured_image.alt | escape
+                          elsif collection_name.featured_image != blank
+                            assign collection_image = collection_name.featured_image
+                            assign image_alt = collection_image.alt | default: collection_name.featured_image.alt | escape
+                          else
+                            assign collection_image = first_product_image
+                            assign image_alt = collection_image.alt | default: collection_name.featured_image.alt | escape
+                          endif
+
+                          assign custom_thumbnail_alt = image_alt | default: vendor | escape
+                        -%}
+
+                        {%- capture custom_thumbnail_sizes -%}(max-width: {{ collection_image.width | times: 2 }}px) 50vw, {{ collection_image.width }}px{%- endcapture -%}
+                        {%- assign custom_thumbnail_height = collection_image.width
+                          | divided_by: collection_image.aspect_ratio
+                        -%}
+
+                        {%- if collection_image != blank -%}
+                          <!-- If collection_image or override image exists -->
+                          <a
+                            id="block-{{ section.id }}-{{ collection_name.id }}"
+                            href="{{ collection_name.url }}"
+                            class="avatar-image avatar-image--{{ section.settings.image_size }}"
+                          >
+                            {{-
+                              collection_image
+                              | image_url: width: 600, crop: 'center'
+                              | image_tag:
+                                class: 'avartar-img',
+                                loading: 'lazy',
+                                widths: '24,40,48,56,72,80,84,96,112,120,144,168',
+                                height: custom_thumbnail_height,
+                                width: collection_image.width,
+                                alt: custom_thumbnail_alt,
+                                sizes: custom_thumbnail_sizes,
+                                preload: true
+                            -}}
+                          </a>
+                        {%- else -%}
+                          <div
+                            class="avatar-image avatar-image--{{ section.settings.image_size }} avatar-image--placeholder"
+                            aria-hidden="true"
+                            aria-label="No collection image"
+                          >
+                            <!-- EMPTY IMAGE PLACEHOLDER TO MAINTAIN ALIGNMENT & SPACING -->
+                          </div>
+                        {%- endif -%}
+                      {%- endif -%}
+                      <!-- END collection image -->
+                      <{{ section.settings.collection_name_tag }} class="vendor-name-heading text--body">
+                        {%- if collections[vendor] -%}
+                          <a
+                            href="/collections/{{ vendor | handleize }}"
+                            role="link"
+                            aria-label="Visit {{ vendor }} collection"
+                            class="link--animated"
+                          >
+                            {{- vendor -}}
+                          </a>
+                        {%- else -%}
+                          {{ vendor | link_to_vendor }}
+                        {%- endif -%}
+
+                        {%- assign vendor_handle = vendor | handleize -%}
+                        {%- assign vendor_collection = collections[vendor_handle] -%}
+
+                        {%- if section.settings.show_results_count == true -%}
+                          {%- if vendor_collection and vendor_collection.products_count != blank -%}
+                            <span
+                              class="product-count text--xsmall text--subdued"
+                              aria-label="{{ vendor_collection.products_count }} results"
+                            >
+                              ({{ vendor_collection.products_count }})
+                            </span>
+                          {%- endif -%}
+                        {%- endif -%}
+
+                        {%- if section.settings.show_vendor_tags == true
+                          and section.settings.tag_color_combinations != blank
+                        -%}
+                          <span class="vendor-tags">
+                            <!-- Your tag logic starts here -->
+                            {%- liquid
+                              assign unique_tags_array = ''
+                              for product in vendor_collection.products
+                                for tag in product.tags
+                                  unless unique_tags_array contains tag
+                                    assign unique_tags_array = unique_tags_array | append: tag | append: ','
+                                    assign all_displayed_tags = all_displayed_tags | append: tag | append: ','
+                                  endunless
+                                endfor
+                              endfor
+
+                              assign unique_tags_array = unique_tags_array | split: ','
+                            -%}
+
+                            {%- for tag_combination in tag_color_combinations -%}
+                              {%- liquid
+                                assign parts = tag_combination | split: ','
+                                assign tag_color_code = parts[1] | strip
+                                assign tag_label = parts[0] | strip
+                              -%}
+                              {%- if unique_tags_array contains tag_label -%}
+                                <span
+                                  class="vendor-tag vendor-tag--small"
+                                  id="tag-{{ vendor | handleize }}-{{ tag_label | handleize }}"
+                                  style="background-color: {{ tag_color_code }};"
+                                  aria-label="Tag: {{ tag_label }}"
+                                >
+                                </span>
+                              {%- endif -%}
+                            {%- endfor -%}
+                            <!-- Your tag logic ends here -->
+                          </span>
+                        {%- endif -%}
+                      </{{ section.settings.collection_name_tag }}>
+                    </div>
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    function scrollToSection(dataAttrValue) {
+      if (dataAttrValue === '#') return; // Do nothing if the placeholder option is selected
+
+      // Collect the heights of all sticky headers with a specific data attribute
+      let totalOffsetHeight = 0;
+      const stickyHeaders = document.querySelectorAll('[data-sticky="true"]');
+
+      stickyHeaders.forEach((header) => {
+        totalOffsetHeight += header.offsetHeight;
+      });
+
+      // Find the element to scroll to based on the data attribute
+      const targetElement = document.querySelector(`[data-section-label="${dataAttrValue.split('=')[1]}"]`);
+
+      if (targetElement) {
+        let sectionOffset = 0;
+
+        // Check if the section has a data-offset attribute and use its value
+        if (targetElement.hasAttribute('data-offset')) {
+          sectionOffset = -parseInt(targetElement.getAttribute('data-offset'), 10); // Note the negative sign
+        }
+
+        const scrollToPosition = targetElement.offsetTop - totalOffsetHeight + sectionOffset;
+        window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
+      }
+    }
+
+    const dropdown = document.querySelector('#anchorDropdown');
+
+    if (dropdown) {
+      dropdown.addEventListener('change', function () {
+        scrollToSection(this.value);
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "List collections",
+  "tag": "section",
+  "class": "shopify-section--main-list-collections",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_separator",
+      "label": "Show section separator",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "both",
+          "label": "Both"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show filters",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_empty_sections",
+      "label": "Show rows with no vendors",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "vendor_sections",
+      "label": "Manual row sorting",
+      "placeholder": "A-C,D-F,G-L,M-Z,0-9,More",
+      "info": "Use ranges A-C, 0-9 or individual letters, or 'More' for special characters."
+    },
+    {
+      "type": "textarea",
+      "id": "included_collections",
+      "label": "Include collection",
+      "placeholder": "collection-handle",
+      "info": "Enter collection handles. One handle per line."
+    },
+    {
+      "type": "textarea",
+      "id": "excluded_collections",
+      "label": "Exclude collection",
+      "placeholder": "Case-sensative Collection name",
+      "info": "Enter collection names to exclude. One name per line."
+    },
+    {
+      "type": "select",
+      "id": "filters_appearance",
+      "label": "Filter appearance",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "Dropdown"
+        },
+        {
+          "value": "nav_list",
+          "label": "Navigation list"
+        }
+      ],
+      "default": "dropdown"
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Vendors"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "Image size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "xlarge",
+          "label": "Larger"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_results_count",
+      "label": "Show results count",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Tags"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor_tags",
+      "label": "Show tags",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags_legend",
+      "label": "Show tag legend",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags_legend_label",
+      "label": "Show tag legend label",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "tag_color_combinations",
+      "label": "Tag combinations",
+      "default": "tag1,#FF0000\ntag2,#00FF00\ntag3,#0000FF",
+      "info": "Specify the tag and color. One combination per line."
+    },
+    {
+      "type": "header",
+      "content": "Advanced: SEO"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading tag",
+      "options": [
+        {
+          "value": "span",
+          "label": "<span>"
+        },
+        {
+          "value": "h2",
+          "label": "<h2>"
+        },
+        {
+          "value": "h3",
+          "label": "<h3>"
+        },
+        {
+          "value": "h4",
+          "label": "<h4>"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "select",
+      "id": "collection_name_tag",
+      "label": "Collection name tag",
+      "options": [
+        {
+          "value": "span",
+          "label": "<span>"
+        },
+        {
+          "value": "h2",
+          "label": "<h2>"
+        },
+        {
+          "value": "h3",
+          "label": "<h3>"
+        },
+        {
+          "value": "h4",
+          "label": "<h4>"
+        }
+      ],
+      "default": "h4"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Thumbnail image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "text",
+          "id": "collection_name",
+          "label": "Collection Name"
+        },
+        {
+          "type": "image_picker",
+          "id": "collection_thumbnail",
+          "label": "Image",
+          "info": "Collection or first product image shown by default. Override by selecting static image or a dynamic source like Metafields. 112 x 112px jpg recommended."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
