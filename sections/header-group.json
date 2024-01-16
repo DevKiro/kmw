@@ -1,0 +1,153 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "02a08cd2-a4af-4755-992f-ee32f6f7a46a": {
+          "type": "message",
+          "disabled": true,
+          "settings": {
+            "text": "<strong>TAKE 20% OFF<\/strong>. Apply code <strong>SPENDLESS<\/strong> at checkout. <a href=\"\/pages\/faq\" title=\"FAQs\">see details.<\/a>",
+            "text_mobile": "<strong>20% OFF<\/strong>. Use <strong>SPENDLESS<\/strong> at checkout. <a href=\"\/pages\/faq\" title=\"FAQs\">details.<\/a>"
+          }
+        },
+        "065e49af-f4b7-43fb-80af-bd7e01b8547b": {
+          "type": "message",
+          "settings": {
+            "text": "For <strong>2nd-Day Shipping,<\/strong> order by 12\/19 at 12pm PT.",
+            "text_mobile": "<strong>2nd-Day Shipping:<\/strong> Order by 12\/19 at 12pm PT."
+          }
+        },
+        "message-1": {
+          "type": "message",
+          "settings": {
+            "text": "<strong>Free Standard Shipping<\/strong> on all US orders. <a href=\"\/policies\/shipping-policy\" title=\"Shipping Policy\">see details<\/a>",
+            "text_mobile": "<strong>Free Standard Shipping<\/strong> on all US orders. <a href=\"\/policies\/shipping-policy\" title=\"Shipping Policy\">details<\/a>"
+          }
+        },
+        "164bb6b0-5eee-4dde-a9fb-2cac04b06047": {
+          "type": "message",
+          "settings": {
+            "text": "Use <strong>SHOP PAY<\/strong> at checkout. Checkout now, pay later! <a href=\"https:\/\/shop.app\/shop-pay\" target=\"_blank\" title=\"https:\/\/shop.app\/shop-pay\">see details<\/a>",
+            "text_mobile": "Use <strong>SHOP PAY<\/strong>. Checkout now, Pay later! <a href=\"https:\/\/shop.app\/shop-pay\" target=\"_blank\" title=\"https:\/\/shop.app\/shop-pay\">details<\/a>"
+          }
+        },
+        "f2422903-4fb4-4375-ba2c-51fd0f8e19f8": {
+          "type": "message",
+          "settings": {
+            "text": "Love It or <strong>Return It Free for 100 Days<\/strong>. <a href=\"\/policies\/refund-policy\" title=\"Refund Policy\">see details<\/a>",
+            "text_mobile": "Love It or <strong>Return It Free for 100 Days<\/strong>. <a href=\"\/policies\/refund-policy\" title=\"Refund Policy\">details<\/a>"
+          }
+        }
+      },
+      "block_order": [
+        "02a08cd2-a4af-4755-992f-ee32f6f7a46a",
+        "065e49af-f4b7-43fb-80af-bd7e01b8547b",
+        "message-1",
+        "164bb6b0-5eee-4dde-a9fb-2cac04b06047",
+        "f2422903-4fb4-4375-ba2c-51fd0f8e19f8"
+      ],
+      "settings": {
+        "announcement_bar_position": "non_sticky",
+        "separator_line": false,
+        "announcement_text_size": "normal",
+        "autoplay": true,
+        "cycle_speed": 6,
+        "background": "#1a2c03",
+        "text_color": "#ffffff",
+        "margin": 0,
+        "padding_top": 12,
+        "padding_bottom": 12,
+        "margin_desktop": 0,
+        "padding_top_desktop": 12,
+        "padding_bottom_desktop": 12
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "5e9909ea-8761-4c2f-8fbe-81d30322df22": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "Shop",
+            "menu_column_font_size": true,
+            "menu_column_font_weight": true,
+            "menu_columns_justify": "space-evenly",
+            "images_position": "right",
+            "image_1": "shopify:\/\/shop_images\/6.png",
+            "image_1_heading": "Shop Now",
+            "image_1_text": "Ready to Ship",
+            "image_1_link": "shopify:\/\/collections\/ready-to-ship",
+            "image_2_heading": "",
+            "image_2_text": "",
+            "image_2_link": "",
+            "image_3_heading": "",
+            "image_3_text": "",
+            "image_3_link": "",
+            "announcement_text": "",
+            "announcement_centered": true
+          }
+        },
+        "6c401610-167b-4286-9168-42ff180f4e11": {
+          "type": "mega_menu_images",
+          "settings": {
+            "menu_item": "The AP Edit: Gifts",
+            "menu_columns_justify": "space-between",
+            "images_position": "left",
+            "image_1": "shopify:\/\/shop_images\/AP_edits-1.png",
+            "image_1_heading": "Story Worthy Staples",
+            "image_1_text": "Shop Under $150",
+            "image_1_link": "shopify:\/\/collections\/under-150",
+            "image_2": "shopify:\/\/shop_images\/AP_edits-2.png",
+            "image_2_heading": "Mix & Match Must-Haves",
+            "image_2_text": "Shop Under $250",
+            "image_2_link": "shopify:\/\/collections\/under-250",
+            "image_3": "shopify:\/\/shop_images\/AP_edits-3.png",
+            "image_3_heading": "Step Up Your Style",
+            "image_3_text": "Shop Under $500",
+            "image_3_link": "shopify:\/\/collections\/under-500",
+            "image_4": "shopify:\/\/shop_images\/AP_edits-4.png",
+            "image_4_heading": "Let There Be Lux",
+            "image_4_text": "Shop $500+",
+            "image_4_link": "shopify:\/\/collections\/investment-jewelry",
+            "announcement_text": "",
+            "announcement_centered": true
+          }
+        }
+      },
+      "block_order": [
+        "5e9909ea-8761-4c2f-8fbe-81d30322df22",
+        "6c401610-167b-4286-9168-42ff180f4e11"
+      ],
+      "settings": {
+        "sticky_header": "always",
+        "tinted": true,
+        "separator_line": false,
+        "reduce_desktop_padding": true,
+        "header_layout": "logo_left_navigation_center",
+        "show_icons": true,
+        "navigation_menu": "main-menu",
+        "sidebar_navigation_menu": "mobile-menu",
+        "show_dropdown_icon": false,
+        "current_page": false,
+        "current_sub_page": false,
+        "search_menu": "related-searches",
+        "enable_transparent_header": false,
+        "transparent_logo": "shopify:\/\/shop_images\/24_web_logotype_transp_white.png",
+        "transparent_header_text_color": "#ffffff",
+        "header_layout_collection": "logo_left_navigation_center",
+        "header_layout_product": "logo_left_navigation_center",
+        "header_layout_blog": "logo_left_navigation_center",
+        "header_layout_article": "logo_left_navigation_center",
+        "header_layout_page": "logo_left_navigation_center",
+        "header_layout_search": "logo_left_navigation_center"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}

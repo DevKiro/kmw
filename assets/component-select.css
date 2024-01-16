@@ -1,0 +1,69 @@
+/* Style the dropdown container */
+.select-dropdown {
+  align-items: center;
+  display: flex;
+  height: 40px;
+  justify-content: start;
+  min-width: max-content;
+  position: relative;
+  transition: color 0.2s ease-in-out;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.select-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: rgb(var(--background));
+  border-radius: var(--button-border-radius);
+  border: none;
+  box-shadow: inset 0 -1px 0 rgb(var(--border-color-strong)), inset -1px 0 0 rgb(var(--border-color)),
+    inset 1px 0 0 rgb(var(--border-color)), inset 0 1px 0 rgb(var(--border-color));
+  outline: none;
+  height: 100%;
+  -webkit-padding-end: calc(var(--space-form-element) * 2);
+  padding-inline-end: calc(var(--space-form-element) * 2);
+  -webkit-padding-start: var(--space-form-element);
+  padding-inline-start: var(--space-form-element);
+  position: relative;
+  text-transform: none;
+  white-space: nowrap;
+  width: 100%;
+  will-change: box-shadow, color;
+}
+
+.select-input:focus,
+.select-input:hover {
+  box-shadow: inset 0 -1px 0 rgb(var(--border-color)), inset -1px 0 0 rgb(var(--border-color-strong)), inset 1px 0 0 rgb(var(--border-color-strong)), inset 0 1px 0 rgb(var(--border-color-strong));
+  transition: box-shadow 0.2s linear;
+}
+
+.select-dropdown .icon {
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+[dir="ltr"] .select-dropdown .icon {
+  right: var(--space-icon-large);
+}
+
+[dir="rtl"] .select-dropdown .icon {
+  left: var(--space-icon-large);
+}
+
+.select-input--solid {
+  background: rgb(var(--background-muted));
+  box-shadow: none;
+}
+
+.select-input:focus,
+.select-input:hover {
+  background: rgb(var(--background-light));
+  box-shadow: none;
+}

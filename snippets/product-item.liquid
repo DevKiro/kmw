@@ -1,0 +1,586 @@
+{%- liquid
+  assign color_label_list = 'general.label.color' | t | replace: ', ', ',' | downcase | split: ','
+
+  assign color_white_label = 'general.label.white' | t | downcase
+  assign quick_buy_icon_name = 'quick-buy-' | append: settings.cart_icon | replace: '_', '-'
+
+  if product.url contains '?'
+    assign product_url_contains_query = true
+  else
+    assign product_url_contains_query = false
+  endif
+-%}
+
+<product-item
+  id="{{ product.id }}"
+  class="product-item{% unless product.available %} product-item--sold-out{% endunless %}"
+  {% if reveal %}
+    reveal
+  {% endif %}
+>
+  {%- capture product_labels -%}
+    {%- if product.available -%}
+      {%- assign label_tags = '' -%}
+      {%- assign label2_tags = '' -%}
+
+      {%- for tag in product.tags -%}
+        {%- if tag contains '__label' -%}
+          {%- if tag contains '__label2' -%}
+            {%- assign label2_tags = label2_tags | append: tag | append: ',' -%}
+          {%- else -%}
+            {%- assign label_tags = label_tags | append: tag | append: ',' -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- assign priority_label_tags = settings.label_priority_list | split: ',' -%}
+      {%- assign priority_label2_tags = settings.label2_priority_list | split: ',' -%}
+
+      {%- assign sorted_label_tags = label_tags | split: ',' -%}
+      {%- assign sorted_label2_tags = label2_tags | split: ',' -%}
+
+      {%- assign final_label_tags = '' -%}
+      {%- assign final_label2_tags = '' -%}
+
+      {%- for tag in priority_label_tags -%}
+        {%- if sorted_label_tags contains tag -%}
+          {%- assign final_label_tags = final_label_tags | append: tag | append: ',' -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- for tag in sorted_label_tags -%}
+        {%- unless final_label_tags contains tag -%}
+          {%- assign final_label_tags = final_label_tags | append: tag | append: ',' -%}
+        {%- endunless -%}
+      {%- endfor -%}
+
+      {%- for tag in priority_label2_tags -%}
+        {%- if sorted_label2_tags contains tag -%}
+          {%- assign final_label2_tags = final_label2_tags | append: tag | append: ',' -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- for tag in sorted_label2_tags -%}
+        {%- unless final_label2_tags contains tag -%}
+          {%- assign final_label2_tags = final_label2_tags | append: tag | append: ',' -%}
+        {%- endunless -%}
+      {%- endfor -%}
+
+      {%- assign final_label_tags = final_label_tags | split: ',' -%}
+      {%- assign final_label2_tags = final_label2_tags | split: ',' -%}
+
+      {%- assign default_label_limit = 1 -%}
+      {%- if settings.label_tags_limit != nil and settings.label_tags_limit > 0 -%}
+        {%- assign label_limit = settings.label_tags_limit -%}
+      {%- elsif default_label_limit > 0 -%}
+        {%- assign label_limit = default_label_limit -%}
+      {%- else -%}
+        {%- assign label_limit = nil -%}
+      {%- endif -%}
+
+      {%- assign default_label2_limit = 2 -%}
+      {%- if settings.label2_tags_limit != nil and settings.label2_tags_limit > 0 -%}
+        {%- assign label2_limit = settings.label2_tags_limit -%}
+      {%- elsif default_label2_limit > 0 -%}
+        {%- assign label2_limit = default_label2_limit -%}
+      {%- else -%}
+        {%- assign label2_limit = nil -%}
+      {%- endif -%}
+
+      {% comment %}
+        {%- for tag in final_label_tags limit: label_limit -%}
+        {%- if tag != '' -%}
+          <span class="label label--custom label--{{ settings.custom_label_1_appearance }}{% if settings.custom_label_1_appearance == 'inline' %} label--inline-color{% endif %}">{{ tag | split: ':' | last }}</span>
+        {%- endif -%}
+      {%- endfor -%} {% endcomment %}
+
+      {% comment %}
+        {%- assign collection_name = collection.title -%}
+        {%- for tag in final_label_tags limit: label_limit -%}
+          {%- assign display_tag = true -%}
+          {%- if tag contains collection_name -%}
+            {%- assign display_tag = false -%}
+          {%- endif -%}
+
+          {%- if tag != '' and display_tag -%}
+            <span class="label label--custom label--{{ settings.custom_label_1_appearance }}{% if settings.custom_label_1_appearance == 'inline' %} label--inline-color{% endif %}">{{ tag | split: ':' | last }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      {% endcomment %}
+
+      {%- assign common_words = "oy,ad,ah,a,an,the,for,to,and,be,of,if,in,that,have,it,for,with,as,at,by,we,or" | split: ',' -%}
+      {%- assign collection_name_words = collection.title | downcase | split: ' ' -%}
+      {%- assign filtered_collection_name_words = '' -%}
+      {%- for word in collection_name_words -%}
+        {%- unless common_words contains word -%}
+          {%- assign filtered_collection_name_words = filtered_collection_name_words | append: word | append: ',' -%}
+        {%- endunless -%}
+      {%- endfor -%}
+      {%- assign filtered_collection_name_words = filtered_collection_name_words | split: ',' -%}
+
+      {%- for tag in final_label_tags limit: label_limit -%}
+        {%- assign display_tag = true -%}
+        {%- assign tag_lowercase = tag | downcase -%}
+        {%- for word in filtered_collection_name_words -%}
+          {%- if tag_lowercase contains word -%}
+            {%- assign display_tag = false -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if tag != '' and display_tag -%}
+          <span class="label label--custom label--{{ settings.custom_label_1_appearance }}{% if settings.custom_label_1_appearance == 'inline' %} label--inline-color{% endif %}">{{ tag | split: ':' | last }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- for tag in final_label2_tags limit: label2_limit -%}
+        {%- assign display_tag = true -%}
+        {%- assign tag_lowercase = tag | downcase -%}
+        {%- for word in filtered_collection_name_words -%}
+          {%- if tag_lowercase contains word -%}
+            {%- assign display_tag = false -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if tag != '' and display_tag -%}
+          <span class="label label--custom2 label--{{ settings.custom_label_1_appearance }}{% if settings.custom_label_1_appearance == 'inline' %} label--inline-color{% endif %}">{{ tag | split: ':' | last }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      <span class="label label--custom label--subdued label--{{ settings.custom_label_1_appearance }}{% if settings.custom_label_1_appearance == 'inline' %} label--inline-color{% endif %}">{{ 'collection.product.sold_out' | t }}</span>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  <div class="product-item__image-wrapper{% if product.available and settings.show_secondary_image and product.media.size > 1 and hide_secondary_image != true %} product-item__image-wrapper--multiple{% endif %}">
+    <a
+      href="{{ product.url }}"
+      data-instant
+      class="product-item__aspect-ratio aspect-ratio {% if settings.product_image_size != 'natural' %}aspect-ratio--{{ settings.product_image_size }}{% endif %}"
+      style="padding-bottom: {{ 100.0 | divided_by: product.featured_media.preview_image.aspect_ratio }}%; --aspect-ratio: {{ product.featured_media.preview_image.aspect_ratio }}"
+    >
+      {%- if product.featured_media -%}
+        {{
+          product.featured_media
+          | image_url: width: product.featured_media.width
+          | image_tag:
+            loading: 'lazy',
+            sizes: sizes_attribute,
+            widths: '200,300,400,500,600,700,800,900,1000,1100,1200',
+            class: 'product-item__primary-image',
+            data-media-id: product.featured_media.id
+        }}
+      {%- endif -%}
+
+      {%- if settings.product_color_display == 'swatch' -%}
+        {%- for color_label in color_label_list -%}
+          {%- if product.options_by_name[color_label] != blank -%}
+            {%- for color_option in product.options_by_name[color_label].values -%}
+              {%- for variant in product.variants -%}
+                {%- if variant.options contains color_option and variant.featured_media != blank -%}
+                  {%- unless variant.featured_media == product.featured_media -%}
+                    {{
+                      variant.featured_media
+                      | image_url: width: variant.featured_media.width
+                      | image_tag:
+                        loading: 'lazy',
+                        sizes: sizes_attribute,
+                        widths: '200,300,400,500,600,700,800,900,1000,1100,1200',
+                        class: 'product-item__primary-image',
+                        data-media-id: variant.featured_media.id,
+                        hidden: true
+                    }}
+                    {% break %}
+                  {%- endunless -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- if settings.show_secondary_image and product.media.size > 1 and hide_secondary_image != true -%}
+        {%- assign next_media = product.media[product.featured_media.position] | default: product.media[1] -%}
+        {{-
+          next_media
+          | image_url: width: next_media.width
+          | image_tag:
+            loading: 'lazy',
+            sizes: sizes_attribute,
+            widths: '200,300,400,500,600,700,800,900,1000,1100,1200',
+            class: 'product-item__secondary-image'
+        -}}
+      {%- endif -%}
+    </a>
+
+    {%- if request.page_type != 'password'
+      and settings.product_add_to_cart
+      and product.available
+      and reduced_content != true
+      and show_cta != true
+    -%}
+      {%- if product.variants.size == 1 -%}
+        {%- liquid
+          case settings.cart_icon
+            when 'tote_bag'
+              assign cart_icons = 'header-tote-bag'
+            when 'tote_bag_pride'
+              assign cart_icons = 'header-tote-bag-pride'
+            when 'shopping_cart'
+              assign cart_icons = 'header-shopping-cart'
+            when 'shopping_basket'
+              assign cart_icons = 'header-cart'
+          endcase
+        -%}
+        {%- capture form_id -%}product_form_{{ section.id }}_{{ block.id }}_{{ product.id }}_{% increment product_form_index %}{%- endcapture -%}
+        {%- form 'product', product, is: 'product-form', id: form_id, class: 'product-item__quick-form' -%}
+          <input type="hidden" name="quantity" value="1">
+          <input type="hidden" name="id" value="{{ product.first_available_variant.id }}">
+          <button
+            is="loader-button"
+            type="submit"
+            class="product-item__quick-buy-button hidden-touch"
+          >
+            <span class="visually-hidden">{{ 'collection.product.add_to_cart_short' | t }}</span>
+            {%- render 'icon' with cart_icons -%}
+          </button>
+          <button type="submit" class="product-item__quick-buy-button hidden-no-touch">
+            <span class="visually-hidden">{{ 'collection.product.add_to_cart_short' | t }}</span>
+            {%- render 'icon' with cart_icons -%}
+          </button>
+        {%- endform -%}
+      {%- else -%}
+        {%- comment -%}
+          IMPLEMENTATION NOTE: Depending on the device we show a different icon or open a different mode (either popover or drawer)
+        {%- endcomment -%}
+        <div class="product-item__quick-form">
+          <button
+            is="toggle-button"
+            loader
+            aria-controls="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-drawer"
+            aria-expanded="false"
+            class="product-item__quick-buy-button hidden-touch hidden-phone"
+          >
+            <span class="visually-hidden">{{ 'collection.product.quick_view' | t }}</span>
+            {%- render 'icon' with 'header-search' -%}
+          </button>
+          <button
+            is="toggle-button"
+            aria-controls="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-drawer"
+            aria-expanded="false"
+            class="product-item__quick-buy-button hidden-no-touch hidden-phone"
+          >
+            <span class="visually-hidden">{{ 'collection.product.quick_view' | t }}</span>
+            {%- render 'icon' with 'header-search' -%}
+          </button>
+
+          <button
+            is="toggle-button"
+            aria-controls="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-popover"
+            aria-expanded="false"
+            class="product-item__quick-buy-button hidden-tablet-and-up"
+          >
+            <span class="visually-hidden">{{ 'collection.product.quick_view' | t }}</span>
+            {%- render 'icon' with 'header-search' -%}
+          </button>
+        </div>
+
+        <quick-buy-popover
+          id="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-popover"
+          href="{{ product.url }}{% if product_url_contains_query %}&{% else %}?{% endif %}view=quick-buy-popover"
+          class="popover popover--quick-buy hidden-tablet-and-up"
+        ></quick-buy-popover>
+        <quick-buy-drawer
+          id="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-drawer"
+          href="{{ product.url }}{% if product_url_contains_query %}&{% else %}?{% endif %}view=quick-buy-drawer"
+          class="drawer drawer--large drawer--quick-buy hidden-phone"
+        ></quick-buy-drawer>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  <div class="product-item__info{% if show_cta %} product-item__info--with-button{% endif %}{% if reduced_font_size %} text--small{% endif %}">
+    <div class="product-item-meta">
+      <!-- START // Product Labels -->
+      {%- if product_labels != blank and reduced_content != true -%}
+        <div class="product-item__label-list label-list label-list--horizontal">
+          {{- product_labels -}}
+        </div>
+      {%- endif -%}
+
+      <!-- START // Product Vendor -->
+      {%- capture product_vendor -%}
+        {%- assign vendor_handle = product.vendor | handle -%}
+        {%- assign collection_for_vendor = collections[vendor_handle] -%}
+        {%- unless collection_for_vendor.empty? -%}
+          <a
+            class="product-item-meta__vendor text--strong"
+            href="{{ collection_for_vendor.url }}"
+            data-instant
+          >
+            {{- product.vendor -}}
+          </a>
+        {%- else -%}
+          <a
+            class="product-item-meta__vendor text--strong"
+            href="{{ product.vendor | url_for_vendor }}"
+            data-instant
+          >
+            {{- product.vendor -}}
+          </a>
+        {%- endunless -%}
+      {%- endcapture -%}
+      {%- liquid
+        if settings.show_vendor
+          if request.page_type == 'collection' and product.vendor == collection.title
+            if settings.show_vendor_match
+              echo product_vendor
+            endif
+          else
+            echo product_vendor
+          endif
+        endif
+      -%}
+
+      <!-- START // Product Title -->
+      <a href="{{ product.url }}" class="product-item-meta__title text--xsmall" data-instant>
+        <h2 class="product-item-meta__title text--xsmall">{{ product.title }}</h2>
+      </a>
+
+      <!-- START // Product Subtitle -->
+      {%- if product.metafields.descriptors.subtitle != blank -%}
+        <h3 class="product-item-meta__subtitle text--subdued text--xsmall">
+          {{ product.metafields.descriptors.subtitle }}
+        </h3>
+      {%- endif -%}
+
+      <!-- START // Product Colors -->
+      {%- if product.available and settings.product_color_display != 'hide' and reduced_content != true -%}
+        {%- for color_label in color_label_list -%}
+          {%- if product.options_by_name[color_label] != blank -%}
+            {%- assign product_option = product.options_by_name[color_label] -%}
+            {%- case settings.product_color_display -%}
+              {%- when 'count' -%}
+                {%- if product_option.values.size > 1 -%}
+                  <span class="product-item-meta__color-count text--xsmall text--subdued">
+                    {{- 'collection.product.available_colors_count' | t: count: product_option.values.size -}}
+                  </span>
+                {%- endif -%}
+              {%- when 'swatch' -%}
+                <div class="product-item-meta__swatch-list color-swatch-list color-swatch-list--mini">
+                  {%- assign variant_option = 'option' | append: product_option.position -%}
+                  {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+
+                  {%- capture color_name -%}{{ section.id }}-{{ block.id }}-{{ product.id }}{%- endcapture -%}
+
+                  {%- for value in product_option.values -%}
+                    {%- capture color_id -%}{{ color_name }}-{{ forloop.index }}{%- endcapture -%}
+                    {%- assign color_value_downcase = value | downcase -%}
+                    {%- assign variant_for_value = product.variants | where: variant_option, value | first -%}
+
+                    <div class="color-swatch{% if color_white_label == color_value_downcase %} color-swatch--white{% endif %}">
+                      <input
+                        class="color-swatch__radio visually-hidden"
+                        type="radio"
+                        name="{{ color_name }}"
+                        id="{{ color_id }}"
+                        value="{{ value | escape }}"
+                        {% if product_option.selected_value == value %}
+                          checked="checked"
+                        {% endif %}
+                        data-variant-id="{{ variant_for_value.id }}"
+                        {% if variant_for_value.featured_media %}
+                          data-variant-featured-media="{{ variant_for_value.featured_media.id }}"
+                        {% endif %}
+                      >
+                      <label
+                        class="color-swatch__item"
+                        for="{{ color_id }}"
+                        style="{% render 'color-swatch-style', color_swatch_config: color_swatch_config, value: value %}"
+                      >
+                        <span class="visually-hidden">{{ value }}</span>
+                      </label>
+                    </div>
+                  {%- endfor -%}
+                </div>
+            {%- endcase -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      <!-- START // Product Price -->
+      {%- if product.available and reduced_content != true -%}
+        <div class="product-item-meta__price-list-container text--small">
+          <div class="price-list price-list--centered">
+            {%- if product.price_varies and product.compare_at_price -%}
+              {%- assign cheapest_variant = product.variants | sort: 'price' | first -%}
+              {%- capture price_min -%}
+                      {%- if settings.currency_code_enabled -%}
+                        {{- cheapest_variant.price | money_with_currency -}}
+                      {%- else -%}
+                        {{- cheapest_variant.price | money -}}
+                      {%- endif -%}
+                    {%- endcapture -%}
+              {%- if cheapest_variant.price < cheapest_variant.compare_at_price -%}
+                <span class="price price--highlight">
+                  <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+                  {{- 'collection.product.from_price_html' | t: price_min: price_min -}}
+                </span>
+                <span class="price price--compare">
+                  <span class="visually-hidden">{{ 'product.general.regular_price' | t }}</span>
+                  {{- cheapest_variant.compare_at_price | money -}}
+                </span>
+                {%- if discount_labels != blank and reduced_content != true -%}
+                  <div class="product-item__label-list label-list label-list--horizontal">
+                    {{- discount_labels -}}
+                  </div>
+                {%- endif -%}
+              {%- else -%}
+                <span class="price">
+                  <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+                  {{- 'collection.product.from_price_html' | t: price_min: price_min -}}
+                </span>
+              {%- endif -%}
+            {%- elsif product.price < product.compare_at_price -%}
+              <span class="price price--highlight">
+                <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+                {%- if settings.currency_code_enabled -%}
+                  {{- product.price | money_with_currency -}}
+                {%- else -%}
+                  {{- product.price | money -}}
+                {%- endif -%}
+              </span>
+              <span class="price price--compare">
+                <span class="visually-hidden">{{ 'product.general.regular_price' | t }}</span>
+                {{- product.compare_at_price | money -}}
+              </span>
+              {%- if discount_labels != blank and reduced_content != true -%}
+                <div class="product-item__label-list label-list label-list--horizontal">
+                  {{- discount_labels -}}
+                </div>
+              {%- endif -%}
+            {%- elsif product.price_varies -%}
+              {%- capture price_min -%}
+                    {%- if settings.currency_code_enabled -%}
+                      {{ product.price_min | money_with_currency }}
+                    {%- else -%}
+                      {{ product.price_min | money }}
+                    {%- endif -%}
+                  {%- endcapture -%}
+              {%- capture price_max -%}
+                    {%- if settings.currency_code_enabled -%}
+                      {{- product.price_max | money_with_currency -}}
+                    {%- else -%}
+                      {{- product.price_max | money -}}
+                    {%- endif -%}
+                  {%- endcapture -%}
+              <span class="price">
+                <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+                {{- 'collection.product.from_price_html' | t: price_min: price_min, price_max: price_max -}}
+              </span>
+            {%- else -%}
+              <span class="price">
+                <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+
+                {%- if settings.currency_code_enabled -%}
+                  {{- product.price | money_with_currency -}}
+                {%- else -%}
+                  {{- product.price | money -}}
+                {%- endif -%}
+              </span>
+            {%- endif -%}
+
+            {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
+              <div class="price price--block text--xsmall text--subdued">
+                <div class="unit-price-measurement">
+                  <span class="unit-price-measurement__price">
+                    {{- product.selected_or_first_available_variant.unit_price | money -}}
+                  </span>
+                  <span class="unit-price-measurement__separator">/</span>
+
+                  {%- if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 -%}
+                    <span class="unit-price-measurement__reference-value">
+                      {{- product.selected_or_first_available_variant.unit_price_measurement.reference_value -}}
+                    </span>
+                  {%- endif -%}
+
+                  <span class="unit-price-measurement__reference-unit">
+                    {{- product.selected_or_first_available_variant.unit_price_measurement.reference_unit -}}
+                  </span>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- START // Product Reviews: Needs to be removed in next update. -->
+      {%- if product.available and settings.show_product_rating and reduced_content != true -%}
+        <a class="product-item-meta__reviews-badge" href="{{ product.url }}" data-instant>
+          {%- render 'product-rating', product: product -%}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- START // Product Item Buttons -->
+    {%- if product.available and reduced_content or show_cta -%}
+      <div class="product-item__cta-wrapper">
+        {%- if product.variants.size == 1 -%}
+          {%- capture form_id -%}product_form_{{ section.id }}_{{ block.id }}_{{ product.id }}_{% increment product_form_index %}{%- endcapture -%}
+          {%- form 'product', product, is: 'product-form', id: form_id -%}
+            <input type="hidden" name="quantity" value="1">
+            <input type="hidden" name="id" value="{{ product.first_available_variant.id }}">
+            <button
+              type="submit"
+              {% if show_cta %}
+                is="loader-button"
+              {% endif %}
+              class="{% if reduced_content %}product-item__link link text--subdued{% else %}product-item__cta button button--primary{% endif %}"
+            >
+              {{ 'collection.product.add_to_cart_short' | t }}
+            </button>
+          {%- endform -%}
+        {%- else -%}
+          <button
+            type="button"
+            {% if show_cta %}
+              loader
+            {% endif %}
+            is="toggle-button"
+            aria-controls="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-drawer"
+            aria-expanded="false"
+            class="{% if reduced_content %}product-item__link link text--subdued{% else %}product-item__cta button button--primary{% endif %} hidden-phone"
+          >
+            {{ 'collection.product.quick_view' | t }}
+          </button>
+          <button
+            type="button"
+            {% if show_cta %}
+              loader
+            {% endif %}
+            is="toggle-button"
+            aria-controls="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-popover"
+            aria-expanded="false"
+            class="{% if reduced_content %}product-item__link link text--subdued{% else %}product-item__cta button button--primary{% endif %} hidden-tablet-and-up"
+          >
+            {{ 'collection.product.quick_view' | t }}
+          </button>
+
+          <quick-buy-popover
+            id="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-popover"
+            href="{{ product.url }}{% if product_url_contains_query %}&{% else %}?{% endif %}view=quick-buy-popover"
+            class="popover popover--quick-buy hidden-tablet-and-up"
+          ></quick-buy-popover>
+          <quick-buy-drawer
+            id="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-drawer"
+            href="{{ product.url }}{% if product_url_contains_query %}&{% else %}?{% endif %}view=quick-buy-drawer"
+            class="drawer drawer--large drawer--quick-buy hidden-phone"
+          ></quick-buy-drawer>
+        {%- endif -%}
+      </div>
+    {%- elsif reduced_content -%}
+      <div class="product-item__cta-wrapper">
+        <span class="product-item__link text--subdued">{{ 'collection.product.sold_out' | t }}</span>
+      </div>
+    {%- endif -%}
+  </div>
+</product-item>

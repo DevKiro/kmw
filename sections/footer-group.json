@@ -1,0 +1,74 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "f86dcefe-0814-4025-a382-4473499d4398": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "header_separator_line": "bottom",
+        "text_alignment": "left",
+        "subheading": "",
+        "title": "Recently viewed",
+        "title_size": "h5",
+        "grid_alignment": "left",
+        "products_count": 4,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "subheading_tag": "h2",
+        "title_tag": "span"
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "links": {
+          "type": "links",
+          "settings": {
+            "menu": "footer"
+          }
+        },
+        "a726c326-e8b3-4a2b-90dc-4b25f1b00a85": {
+          "type": "links",
+          "disabled": true,
+          "settings": {
+            "menu": "ap-edits"
+          }
+        },
+        "8a41b523-da66-45c5-8cff-ca7c2fe5dd1d": {
+          "type": "links",
+          "settings": {
+            "menu": "footer-help"
+          }
+        },
+        "75b974b0-5fa5-475e-82b9-e79ee21a9285": {
+          "type": "links",
+          "settings": {
+            "menu": "footer-about"
+          }
+        },
+        "0772e14f-bfb1-43d6-899e-fdb11cec1b65": {
+          "type": "social_media",
+          "settings": {
+            "title": "Follow us",
+            "content": ""
+          }
+        }
+      },
+      "block_order": [
+        "links",
+        "a726c326-e8b3-4a2b-90dc-4b25f1b00a85",
+        "8a41b523-da66-45c5-8cff-ca7c2fe5dd1d",
+        "75b974b0-5fa5-475e-82b9-e79ee21a9285",
+        "0772e14f-bfb1-43d6-899e-fdb11cec1b65"
+      ],
+      "settings": {
+        "show_payment_icons": true,
+        "enable_follow_on_shop": false
+      }
+    }
+  },
+  "order": [
+    "f86dcefe-0814-4025-a382-4473499d4398",
+    "footer"
+  ]
+}

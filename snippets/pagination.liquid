@@ -1,0 +1,74 @@
+{%- if paginate.pages > 1 -%}
+  {{ 'component-pagination.css' | asset_url | stylesheet_tag }}
+
+  <page-pagination
+    class="pagination{% if layout_narrow %} pagination--narrow{% endif %}"
+    {% if use_ajax %}
+      ajax
+    {% endif %}
+  >
+    <nav class="pagination__outer" role="navigation">
+      <ol aria-live="polite" class="pagination__list" role="list">
+        <li class="pagination__arrow pagination__arrow--left{% unless paginate.previous %} is-disabled{% endunless %}">
+          <a
+            class="pagination__arrow-link"
+            rel="prev"
+            aria-label="{{ 'general.pagination.previous_page' | t }}"
+            data-page="{{ paginate.current_page | minus: 1 }}"
+            href="{{ paginate.previous.url }}{{ hash }}"
+          >
+            {%- render 'icon' with 'chevron-back-big' -%}
+          </a>
+        </li>
+
+        <li class="pagination__pages">
+          {% if layout_narrow %}
+            <div
+              aria-label="{{- 'general.meta.of_pages' | t: page: paginate.current_page, pages: paginate.pages }}"
+              aria-current="page"
+              class="pagination__pages"
+            >
+              <span class="pagination__pages-item heading text-label-small">
+                {{- 'general.meta.of_pages_html' | t: page: paginate.current_page, pages: paginate.pages -}}
+              </span>
+            </div>
+          {% else %}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a
+                  href="{{ part.url }}{{ hash }}"
+                  data-page="{{ part.title }}"
+                  class="pagination__pages-item heading text-label-small"
+                  aria-label="{{ 'general.pagination.go_to_page' | t: page: part.title }}"
+                >
+                  {{- part.title -}}
+                </a>
+              {%- else -%}
+                <span
+                  class="pagination__pages-item{% if part.title == paginate.current_page %} pagination__nav-item-shape--{{ settings.pagination_active_shape }}{% endif %} heading text-label-small"
+                  {% if part.title == paginate.current_page %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  {{- part.title -}}
+                </span>
+              {%- endif -%}
+            {%- endfor -%}
+          {% endif %}
+        </li>
+
+        <li class="pagination__arrow pagination__arrow--right{% unless paginate.next %} is-disabled{% endunless %}">
+          <a
+            class="pagination__arrow-link"
+            rel="next"
+            aria-label="{{ 'general.pagination.next_page' | t }}"
+            data-page="{{ paginate.current_page | plus: 1 }}"
+            href="{{ paginate.next.url }}{{ hash }}"
+          >
+            {%- render 'icon' with 'dropdown-arrow-right-big' -%}
+          </a>
+        </li>
+      </ol>
+    </nav>
+  </page-pagination>
+{%- endif -%}

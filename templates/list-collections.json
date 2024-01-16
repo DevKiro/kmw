@@ -1,0 +1,135 @@
+{
+  "sections": {
+    "main-list-collections-banner": {
+      "type": "main-list-collections-banner",
+      "settings": {
+        "title": "Designers",
+        "title_size": "h3",
+        "show_subtitle": true,
+        "text_position": "center",
+        "section_separator": "none",
+        "title_tag": "h1",
+        "subheading_tag": "h2"
+      }
+    },
+    "f6d12c36-4546-48e9-b4ec-7fe2140cfa75": {
+      "type": "collection-list",
+      "blocks": {
+        "template--20623353217310__f6d12c36-4546-48e9-b4ec-7fe2140cfa75-collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "lionheart",
+            "image": "{{ block.settings.collection.metafields.custom.second_image.value }}",
+            "subheading": "",
+            "title": "",
+            "link_text": "Shop {{ block.settings.collection.title }}",
+            "link_url": "",
+            "text_position": "left",
+            "text_color": "rgba(0,0,0,0)"
+          }
+        },
+        "48c824c3-de06-4942-b279-71ec08365bbb": {
+          "type": "collection",
+          "settings": {
+            "collection": "anita-berisha",
+            "image": "{{ block.settings.collection.metafields.custom.second_image.value }}",
+            "subheading": "",
+            "title": "",
+            "link_text": "Shop {{ block.settings.collection.title }}",
+            "link_url": "",
+            "text_position": "left",
+            "text_color": "rgba(0,0,0,0)"
+          }
+        },
+        "4a6ed374-5d35-4f13-88f6-91cdbfacd7ec": {
+          "type": "collection",
+          "settings": {
+            "collection": "christina-caruso",
+            "image": "{{ block.settings.collection.metafields.custom.second_image.value }}",
+            "subheading": "",
+            "title": "",
+            "link_text": "Shop {{ block.settings.collection.title }}",
+            "link_url": "",
+            "text_position": "left",
+            "text_color": "rgba(0,0,0,0)"
+          }
+        },
+        "88556bd0-3e21-4034-a931-9242992dbe20": {
+          "type": "collection",
+          "settings": {
+            "collection": "agmes",
+            "subheading": "",
+            "title": "",
+            "link_text": "Shop {{ block.settings.collection.title }}",
+            "link_url": "",
+            "text_position": "left",
+            "text_color": "rgba(0,0,0,0)"
+          }
+        }
+      },
+      "block_order": [
+        "template--20623353217310__f6d12c36-4546-48e9-b4ec-7fe2140cfa75-collection-1",
+        "48c824c3-de06-4942-b279-71ec08365bbb",
+        "4a6ed374-5d35-4f13-88f6-91cdbfacd7ec",
+        "88556bd0-3e21-4034-a931-9242992dbe20"
+      ],
+      "settings": {
+        "reveal_on_scroll": false,
+        "layout": "carousel",
+        "section_separator": "none",
+        "subheading": "",
+        "title": "",
+        "title_size": "h6",
+        "text_position": "left",
+        "header_separator": "none",
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "subheading_tag": "span",
+        "title_tag": "span",
+        "block_subheading_tag": "span",
+        "block_title_tag": "span",
+        "block_text_tag": "h3"
+      }
+    },
+    "main": {
+      "type": "main-list-collections",
+      "blocks": {
+        "c481b7a7-bdf6-4879-b984-e1139848d9ec": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "collection_name": "AGMES",
+            "collection_thumbnail": "shopify:\/\/shop_images\/AP24-Icon-Black-TestOverride.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "c481b7a7-bdf6-4879-b984-e1139848d9ec"
+      ],
+      "settings": {
+        "section_separator": "top",
+        "show_filters": true,
+        "show_empty_sections": false,
+        "vendor_sections": "",
+        "included_collections": "rings",
+        "excluded_collections": "",
+        "filters_appearance": "dropdown",
+        "text_position": "center",
+        "show_image": true,
+        "image_size": "medium",
+        "show_results_count": true,
+        "show_vendor_tags": true,
+        "show_tags_legend": true,
+        "show_tags_legend_label": true,
+        "tag_color_combinations": "__label:Ready to Ship,#E9FC5A,Ready to Ship\n__label2:Best Seller,#A0C7FE, Best Seller\nAP_New,#F492CE,New Arrival",
+        "heading_tag": "h2",
+        "collection_name_tag": "h3"
+      }
+    }
+  },
+  "order": [
+    "main-list-collections-banner",
+    "f6d12c36-4546-48e9-b4ec-7fe2140cfa75",
+    "main"
+  ]
+}

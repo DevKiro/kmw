@@ -1,0 +1,139 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": false,
+        "page_width": "medium"
+      }
+    },
+    "d59a5156-47e3-4853-977b-4c2217e62f98": {
+      "type": "image-with-text-block",
+      "settings": {
+        "reveal_on_scroll": false,
+        "image": "shopify:\/\/shop_images\/ContactArtboard_1.jpg",
+        "mobile_image": "shopify:\/\/shop_images\/ContactArtboard_2.jpg",
+        "subheading": "NEED ASSISTANCE?",
+        "title": "Contact Us",
+        "content": "<p>We are happy to help! Shoot us a message and our customer care team will be in touch as soon as possible.<\/p>",
+        "button_text": "",
+        "button_link": "",
+        "background_type": "boxed",
+        "text_position": "overlap_right",
+        "text_alignment": "center",
+        "text_background": "#fff5ed",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "966ef719-d0ec-4ab9-a3cf-a803ddf7a94b": {
+      "type": "multi-column",
+      "blocks": {
+        "template--20623353315614__966ef719-d0ec-4ab9-a3cf-a803ddf7a94b-item-2": {
+          "type": "item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/IconsArtboard-7.png",
+            "image_width": 30,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "Email",
+            "content": "<p><a href=\"mailto:today@atpresent.com\" title=\"mailto:today@atpresent.com\">today@atpresent.com<\/a><\/p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center",
+            "vertical_alignment": "start"
+          }
+        },
+        "template--20623353315614__966ef719-d0ec-4ab9-a3cf-a803ddf7a94b-item-1": {
+          "type": "item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/IconsArtboard-8.png",
+            "image_width": 30,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "Phone",
+            "content": "<p>+1(206)659-6885<\/p><p>MON-FRI: 9am to 6pm PDT<\/p><p><\/p><p><\/p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center",
+            "vertical_alignment": "start"
+          }
+        },
+        "template--20623353315614__966ef719-d0ec-4ab9-a3cf-a803ddf7a94b-item-3": {
+          "type": "item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/IconsArtboard-9.png",
+            "image_width": 30,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "Connect With Us",
+            "content": "<p><a href=\"https:\/\/www.instagram.com\/at__present\/\" target=\"_blank\" title=\"At Present Instagram\">@at__present<\/a><\/p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center",
+            "vertical_alignment": "start"
+          }
+        },
+        "template--20623353315614__966ef719-d0ec-4ab9-a3cf-a803ddf7a94b-item-4": {
+          "type": "item",
+          "disabled": true,
+          "settings": {
+            "image_width": 100,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "Ways to Chat",
+            "content": "<p>Trigger the  SMS<\/p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center",
+            "vertical_alignment": "start"
+          }
+        }
+      },
+      "block_order": [
+        "template--20623353315614__966ef719-d0ec-4ab9-a3cf-a803ddf7a94b-item-2",
+        "template--20623353315614__966ef719-d0ec-4ab9-a3cf-a803ddf7a94b-item-1",
+        "template--20623353315614__966ef719-d0ec-4ab9-a3cf-a803ddf7a94b-item-3",
+        "template--20623353315614__966ef719-d0ec-4ab9-a3cf-a803ddf7a94b-item-4"
+      ],
+      "settings": {
+        "reveal_on_scroll": true,
+        "stack_items": false,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "column_alignment": "center",
+        "mobile_item_size": "medium",
+        "desktop_item_size": "medium",
+        "spacing": "normal",
+        "background": "#fff5ed",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "contact-form": {
+      "type": "contact-form",
+      "disabled": true,
+      "settings": {
+        "title": "Contact Us",
+        "content": "",
+        "text_1_heading": "",
+        "text_1_text": "",
+        "text_2_heading": "",
+        "text_2_text": "",
+        "background": "#fff5ed",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "d59a5156-47e3-4853-977b-4c2217e62f98",
+    "966ef719-d0ec-4ab9-a3cf-a803ddf7a94b",
+    "contact-form"
+  ]
+}
