@@ -1,12 +1,82 @@
 {
   "sections": {
+    "image_with_text_block_6RhRey": {
+      "type": "image-with-text-block",
+      "custom_css": [
+        ":root {--vertical-breather: 0px;}"
+      ],
+      "settings": {
+        "reveal_on_scroll": true,
+        "image": "shopify:\/\/shop_images\/PrivateClientArtboard_1.jpg",
+        "mobile_image": "shopify:\/\/shop_images\/PrivateClientArtboard_2.jpg",
+        "subheading": "LET US HELP!",
+        "title": "The Private Client Experience",
+        "content": "<p>Looking for bespoke jewelry services or complimentary personal shopping? There is nothing we enjoy more! With decades of experience in fine jewelry and fashion, let us help you pick the perfect piece to celebrate the now.<br\/><br\/><a href=\"https:\/\/calendly.com\/marc-bridge\/30min?month=2023-11\" target=\"_blank\" title=\"Schedule a virtual appointment\"><strong>Schedule a virtual appointment<\/strong><\/a><br\/><br\/>• Email <a href=\"mailto:today@atpresent.com\" target=\"_blank\">today@atpresent.com<\/a><br\/>• Call <a href=\"tel:+12066596885\" title=\"tel:+12066596885\">(206) 659-6885<\/a><\/p><p><strong>Typically available:<\/strong><br\/>Monday-Friday, 9 am - 6 pm PST.<\/p>",
+        "button_text": "Schedule Appointment",
+        "button_link": "https:\/\/calendly.com\/marc-bridge\/30min?month=2023-11",
+        "background_type": "full_width",
+        "text_position": "overlap_left",
+        "text_alignment": "left",
+        "text_background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "#1a2c03",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "announcement_scroller_8jTMPP": {
+      "type": "announcement-scroller",
+      "blocks": {
+        "content_nbBciV": {
+          "type": "content",
+          "settings": {
+            "text": "Welcome!",
+            "title_style": "heading",
+            "title_size": "h3",
+            "text_color": "#000000",
+            "image_width": 50,
+            "link": ""
+          }
+        },
+        "content_VQQdpw": {
+          "type": "content",
+          "settings": {
+            "text": "Welcome!",
+            "title_style": "heading",
+            "title_size": "h3",
+            "text_color": "#000000",
+            "image_width": 50,
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_nbBciV",
+        "content_VQQdpw"
+      ],
+      "settings": {
+        "ticker_animation": "on",
+        "ticker_pause_hover": "on",
+        "background_color": "#ffffff",
+        "border_color": "#cccccc",
+        "vertical_margins": "flush",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 36,
+        "padding_bottom_mobile": 36
+      }
+    },
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
+        "show_title": true,
+        "page_width": "medium"
       }
     }
   },
   "order": [
+    "image_with_text_block_6RhRey",
+    "announcement_scroller_8jTMPP",
     "main"
   ]
 }
