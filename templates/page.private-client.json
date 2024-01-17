@@ -3,7 +3,7 @@
     "image_with_text_block_6RhRey": {
       "type": "image-with-text-block",
       "custom_css": [
-        ":root {--vertical-breather: 0px;}"
+
       ],
       "settings": {
         "reveal_on_scroll": true,
