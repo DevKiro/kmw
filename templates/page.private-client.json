@@ -3,7 +3,7 @@
     "image_with_text_block_6RhRey": {
       "type": "image-with-text-block",
       "custom_css": [
-
+        "@media screen and (min-width: 1000px) {.image-with-text-block {--custom-offset: 164px; max-height: calc( var(--window-height, 100vh) - var(--custom-offset, 0px) - var(--header-height, 0px) * var(--enable-sticky-header) - var(--announcement-bar-height, 0px) * var(--enable-sticky-announcement-bar) ); }}"
       ],
       "settings": {
         "reveal_on_scroll": true,
