@@ -70,7 +70,7 @@
   }
 </style>
 
-<section class="section{% unless is_boxed or section.settings.text_position contains 'overlap' or section.settings.remove_vertical_margins %} section--flush{% endunless %}">
+<section class="section{% unless is_boxed or section.settings.text_position contains 'overlap' or section.settings.remove_vertical_margins == false %} section--flush{% endunless %}">
   <div
     {% if is_boxed %}
       class="container"
