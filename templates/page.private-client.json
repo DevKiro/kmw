@@ -20,7 +20,8 @@
         "text_background": "rgba(0,0,0,0)",
         "text_color": "rgba(0,0,0,0)",
         "button_background": "#1a2c03",
-        "button_text_color": "rgba(0,0,0,0)"
+        "button_text_color": "rgba(0,0,0,0)",
+        "remove_vertical_margins": true
       }
     },
     "announcement_scroller_8jTMPP": {
