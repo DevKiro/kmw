@@ -32,7 +32,7 @@
             "text": "Personal Shopping",
             "title_style": "heading",
             "title_size": "h3",
-            "text_color": "#000000",
+            "text_color": "#ffffff",
             "image_width": 50,
             "link": ""
           }
@@ -43,7 +43,7 @@
             "text": "Free Stylist Advice",
             "title_style": "heading",
             "title_size": "h3",
-            "text_color": "#000000",
+            "text_color": "#ffffff",
             "image_width": 50,
             "link": ""
           }
@@ -54,7 +54,7 @@
             "text": "Bespoke Services",
             "title_style": "heading",
             "title_size": "h3",
-            "text_color": "#000000",
+            "text_color": "#ffffff",
             "image_width": 50,
             "link": ""
           }
