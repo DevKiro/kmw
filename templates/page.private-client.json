@@ -67,9 +67,9 @@
       ],
       "settings": {
         "ticker_animation": "on",
-        "ticker_pause_hover": "on",
-        "background_color": "#ffffff",
-        "border_color": "#cccccc",
+        "ticker_pause_hover": "off",
+        "background_color": "#ad8840",
+        "border_color": "rgba(0,0,0,0)",
         "vertical_margins": "flush",
         "padding_top": 40,
         "padding_bottom": 40,
