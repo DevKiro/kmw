@@ -68,9 +68,15 @@
       }
     {%- endunless -%}
   }
+
+  {%- if section.settings.remove_vertical_margins -%}
+    #shopify-section-{{ section.id }} .section {
+      margin: 0 !important; /* Because it blends with the background we have to remove double margin */
+    }
+  {%- endif -%}
 </style>
 
-<section class="section{% unless is_boxed or section.settings.text_position contains 'overlap' or section.settings.remove_vertical_margins == false %} section--flush{% endunless %}">
+<section class="section{% unless is_boxed or section.settings.text_position contains 'overlap' %} section--flush{% endunless %}">
   <div
     {% if is_boxed %}
       class="container"
