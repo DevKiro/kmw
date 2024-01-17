@@ -70,7 +70,7 @@
   }
 </style>
 
-<section class="section {% unless is_boxed %}section--flush{% endunless %}">
+<section class="section{% unless is_boxed or section.settings.text_position contains 'overlap' or section.settings.remove_vertical_margins %} section--flush{% endunless %}">
   <div
     {% if is_boxed %}
       class="container"
@@ -335,6 +335,16 @@
       "id": "button_text_color",
       "label": "Button text",
       "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_vertical_margins",
+      "label": "Remove vertical margins",
+      "default": false
     }
   ],
   "presets": [
