@@ -46,7 +46,7 @@
             "title_size": "h3",
             "text_color": "#ffffff",
             "image": "shopify:\/\/shop_images\/Bullet_3_8d29f864-965b-4291-8c6b-0b1b74d02861.png",
-            "image_width": 50,
+            "image_width": 34,
             "link": ""
           }
         },
@@ -57,7 +57,8 @@
             "title_style": "heading",
             "title_size": "h3",
             "text_color": "#ffffff",
-            "image_width": 50,
+            "image": "shopify:\/\/shop_images\/Bullet_1_e94da54d-5ac7-4b17-892b-1e1da24c76a7.png",
+            "image_width": 40,
             "link": ""
           }
         }
